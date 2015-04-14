@@ -6,8 +6,9 @@ head
   script(src="bower_components/requirejs/require.js")
   link(rel="stylesheet" href="main.css")
 
-body.container
-  != yield
+body
+  .container
+    != yield
 
-  script
+  script.
     require(['app'], function(app) { app.init(); });

@@ -1,9 +1,15 @@
-h1 /b/-list generator
+
+h1.text-center /b/-list generator
+
 hr
-textarea(js-input)
+textarea.form-control(js-input rows=10)
+
 hr
-button(js-button) go
+.row
+  .col-md-6.col-md-offset-3
+    button.btn.btn-block.btn-primary(js-button) go
+
 hr
-textarea(js-output)
-hr
+textarea.form-control(js-output rows=10)
+
 ol(js-list)
