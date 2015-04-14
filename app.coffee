@@ -2,13 +2,14 @@ requirejs.config
   paths:
     "jquery"     : "bower_components/jquery/dist/jquery"
     "lodash"     : "bower_components/lodash/lodash"
+    "echo"       : "bower_components/echojs/dist/echo"
     "handlebars" : "bower_components/handlebars/handlebars"
     "bootstrap"  : "bower_components/bootstrap-sass/assets/javascripts/bootstrap"
 
   shim:
     "bootstrap"  : deps: ['jquery']
 
-define ["jquery", "lodash", "handlebars", "bootstrap"], ($, _, Hb) ->
+define ["jquery", "lodash", "handlebars", "bootstrap", "echo"], ($, _, Hb, bs, echo) ->
 
   $list          = $("[js-list]")
   $input         = $("[js-input]")
@@ -75,6 +76,9 @@ define ["jquery", "lodash", "handlebars", "bootstrap"], ($, _, Hb) ->
         html = template data
 
         $list.append html
+
+        # @TODO this didn't work. Lazyload better.
+        echo.init()
 
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"

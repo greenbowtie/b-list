@@ -29,5 +29,5 @@ script(type="text/x-handlebars-template" js-list-template)
       {{/if}}
 
     .panel-collapse.collapse(id="collapse-{{num}}" class="{{#if in_class}}in{{/if}}"): .panel-body
-      iframe(type="text/html" width="640" height="390" frameborder="0"
-        lazy-src="https://www.youtube.com/embed/{{code}}?enablejsapi=1&origin=http://localhost/")
+      iframe.lazy-load(type="text/html" width="640" height="390" frameborder="0"
+        data-echo="https://www.youtube.com/embed/{{code}}?enablejsapi=1&origin=http://localhost/")
