@@ -3,13 +3,18 @@ requirejs.config
     "jquery"     : "bower_components/jquery/dist/jquery"
     "lodash"     : "bower_components/lodash/lodash"
     "handlebars" : "bower_components/handlebars/handlebars"
+    "bootstrap"  : "bower_components/bootstrap-sass/assets/javascripts/bootstrap"
 
-define ["jquery", "lodash", "handlebars"], ($, _, Hb) ->
+  shim:
+    "bootstrap"  : deps: ['jquery']
 
-  $list   = $("[js-list]")
-  $input  = $("[js-input]")
-  $output = $("[js-output]")
-  $button = $("[js-button]")
+define ["jquery", "lodash", "handlebars", "bootstrap"], ($, _, Hb) ->
+
+  $list          = $("[js-list]")
+  $input         = $("[js-input]")
+  $output        = $("[js-output]")
+  $button        = $("[js-button]")
+  $list_template = $("[js-list-template]")
 
   youtube_url = "http://gdata.youtube.com/feeds/api/videos?q="
   youtube_data = {
@@ -59,12 +64,26 @@ define ["jquery", "lodash", "handlebars"], ($, _, Hb) ->
 
     fill_list: ($list, items) ->
       _.forEach items, (item, n) ->
-        li = $("<li />").text item
-        $list.append li
-        false
+        template = Hb.compile $list_template.html()
+        data = {
+          item: item
+          in_class: -> n is 0
+          num: n
+          code: self.get_code item
+        }
+
+        html = template data
+
+        $list.append html
 
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"
+
+    get_code: (url) ->
+      pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i
+      matches = url.match pattern
+
+      return matches[1]
 
     die: (why) ->
       alert "#{why}"

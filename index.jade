@@ -12,4 +12,22 @@ hr
 hr
 textarea.form-control(js-output rows=10)
 
-ol(js-list)
+hr
+#b-list.panel-group(js-list)
+
+
+//- template starts here
+script(type="text/x-handlebars-template" js-list-template)
+  .panel.panel-default(data-num="{{num}}")
+
+    .panel-heading(id="heading-{{num}}" data-toggle="collapse" data-parent="#b-list" data-target="#collapse-{{num}}")
+
+      {{#if loaded}}
+      hf.panel-title {{otheritem}}
+      {{else}}
+      h4.panel-title {{item}}
+      {{/if}}
+
+    .panel-collapse.collapse(id="collapse-{{num}}" class="{{#if in_class}}in{{/if}}"): .panel-body
+      iframe(type="text/html" width="640" height="390" frameborder="0"
+        lazy-src="https://www.youtube.com/embed/{{code}}?enablejsapi=1&origin=http://localhost/")
