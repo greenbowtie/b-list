@@ -1,33 +1,48 @@
 
 h1.text-center /b/-list generator
-
 hr
+
 textarea.form-control(js-input rows=10)
-
 hr
+
 .row
   .col-md-6.col-md-offset-3
     button.btn.btn-block.btn-primary(js-button) go
-
 hr
+
+div(js-player)
+
+ol#b-list.b-list.list-group(js-list)
+hr
+
 textarea.form-control(js-output rows=10)
 
-hr
-#b-list.panel-group(js-list)
-
-
-//- template starts here
+//- list template
 script(type="text/x-handlebars-template" js-list-template)
-  .panel.panel-default(data-num="{{num}}")
+  li.list-group-item.b-list-item(data-code="{{code}}" class="{{playing}}")
+    span.count {{count}}
+    span.js-url {{item}}
+    span.js-title
+    span.js-user
 
-    .panel-heading(id="heading-{{num}}" data-toggle="collapse" data-parent="#b-list" data-target="#collapse-{{num}}")
+    .b-list-status(js-status): .glyphicon.glyphicon-play
 
-      {{#if loaded}}
-      hf.panel-title {{otheritem}}
-      {{else}}
-      h4.panel-title {{item}}
-      {{/if}}
 
-    .panel-collapse.collapse(id="collapse-{{num}}" class="{{#if in_class}}in{{/if}}"): .panel-body
-      iframe.lazy-load(type="text/html" width="640" height="390" frameborder="0"
-        data-echo="https://www.youtube.com/embed/{{code}}?enablejsapi=1&origin=http://localhost/")
+//- player template
+script(type="text/x-handlebars-template" js-player-template)
+  youtube-embed(videoid="{{code}}")
+
+  //- .panel.panel-default(data-num="{{num}}")
+
+  //-   .panel-heading(id="heading-{{num}}" data-toggle="collapse" data-parent="#b-list" data-target="#collapse-{{num}}")
+
+  //-     {{#if loaded}}
+  //-     hf.panel-title {{otheritem}}
+  //-     {{else}}
+  //-     h4.panel-title {{item}}
+  //-     {{/if}}
+
+  //-   .panel-collapse.collapse(id="collapse-{{num}}" class="{{#if in_class}}in{{/if}}"): .panel-body
+  //-     youtube-embed(videoid="{{code}}")
+  //-     //- iframe.lazy-load(type="text/html" width="640" height="390" frameborder="0"
+  //-     //-   data-echo="https://www.youtube.com/embed/?enablejsapi=1&origin=http://localhost/")
