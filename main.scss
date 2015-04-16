@@ -2,48 +2,12 @@
 $icon-font-path: "bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 @import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 
-$list-group-min-height: 41px;
-
-
-%b-list-square {
-  width: $list-group-min-height;
-  height: $list-group-min-height;
-  line-height: $list-group-min-height;
-  text-align: center;
-}
-
-.b-list {
-  counter-reset: b-list;
-}
-
 .b-list-item {
   position: relative;
   user-select: none;
   cursor: row-resize;
-
-  &::before {
-    position: absolute;
-    top: 0;
-    right: 100%;
-    content: counter(b-list);
-    counter-increment: b-list;
-    font-size: 20px;
-    font-weight: bold;
-    @extend %b-list-square;
-  }
-
-  &.active::after {
-  }
 }
 
-.b-list-status {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  display: none;
-  @extend %b-list-square;
-
-  .active & {
-    display: block;
-  }
+.b-list-count {
+  margin-right: 1em;
 }

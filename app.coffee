@@ -12,19 +12,13 @@ requirejs.config
 define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
 ($, _, Hb, bs, S) ->
 
-  $list          = $("[js-list]")
-  $input         = $("[js-input]")
-  $output        = $("[js-output]")
-  $button        = $("[js-button]")
-  $list_template = $("[js-list-template]")
-
-  youtube_url = "http://gdata.youtube.com/feeds/api/videos?q="
-  youtube_data = {
-    format: 5
-    "max-results": 1
-    v: 2
-    alt: "json"
-  }
+  $b_list          = $("[js-b-list]")
+  $player          = $("[js-player]")
+  $input           = $("[js-input]")
+  $output          = $("[js-output]")
+  $button          = $("[js-button]")
+  $b_list_template = $("[js-b-list-template]")
+  youtube_url      = "http://gdata.youtube.com/feeds/api/videos?q=<%= code %>&format=5&max-results=1&v=2&alt=jsonc"
 
   # this is implicitly returned by coffee-script.
   self = {
@@ -41,10 +35,12 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
       val = $input.val()
 
       if val
+        self.save val
+
         self.empty_everything()
         self.process val
-        self.save val
-        console.log "playing: #{self.get_playing($list)}"
+
+
       else
         self.die "no ticket"
 
@@ -53,9 +49,9 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
 
       if urls
         self.fill_output $output, urls
-        self.fill_list $list, urls
+        self.fill_list $b_list, urls
 
-        sortable = S.create $list.get(0), {
+        sortable = S.create $b_list.get(0), {
           ghostClass: "disabled"
         }
 
@@ -69,33 +65,50 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
       pattern = /(((http(s)?:\/\/)?)(www\.)?((youtube\.com\/)|(youtu\.be)|(youtube)).[^ ]+)/g
       matches = text.match pattern
 
-    get_playing: ($el) ->
-      playing = $el.find ".playing"
-      index = $el.find("li").index playing
+    get_playing: ($ul) ->
+      playing = $ul.find ".playing"
+      index = $ul.find("li").index playing
 
-    fill_list: ($list, items) ->
+    get_next: ($ul) ->
+      (self.get_playing $ul) - 1
+
+    set_playing: ($li) ->
+      $li.siblings().removeClass ".playing"
+      $li.addClass "playing"
+
+    start_playback: ->
+      start  = self.get_playing($b_list) + 1
+      $start = $b_list.find('li')?.eq start
+      this.play $start
+
+    play: ($li) ->
+      code = $li.data 'code'
+      $player.html "<youtube-embed videoid=#{code} autoplay=1></youtube-embed>"
+
+      self.set_playing($li)
+
+    fill_list: ($ul, items) ->
       _.forEach items, (item, n) ->
-        template = Hb.compile $list_template.html()
-        data = {
-          item: item
-          code: self.get_code item
-          playing: if n is 0 then "playing" else ""
-          num: n
-          count: n + 1
-        }
 
-        html = template data
+        template = Hb.compile $b_list_template.html()
+        code     = self.get_code item
+        num      = n
+        count    = n + 1
+        tdata    = {item,code,num,count,$ul}
 
-        $list.append html
+        self.get_youtube_data code, num
 
-        # @TODO this didn't work. Lazyload better.
-        # echo.init()
+        html = template tdata
+        $ul.append html
+
+        self.start_playback() if num is 0
+        false
 
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"
 
     empty_everything: ->
-      $list.empty()
+      $b_list.empty()
       $output.val ""
 
     get_code: (url) ->
@@ -103,6 +116,19 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
       matches = url.match pattern
 
       return matches[1]
+
+    get_youtube_data: (code, num) ->
+      tpl = _.template youtube_url
+      url = tpl {code}
+      req = $.getJSON url
+
+      req.done (data) ->
+        self.add_title data.data.items?[0].title, num
+
+    add_title: (title, num) ->
+        $li = $b_list.find('li').eq num
+        $li.find('[js-title]').text title
+
 
     die: (why) ->
       alert "#{why}"

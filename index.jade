@@ -12,20 +12,17 @@ hr
 
 div(js-player)
 
-ol#b-list.b-list.list-group(js-list)
+ul#b-list.b-list.list-group(js-b-list)
 hr
 
 textarea.form-control(js-output rows=10)
 
 //- list template
-script(type="text/x-handlebars-template" js-list-template)
+script(type="text/x-handlebars-template" js-b-list-template)
   li.list-group-item.b-list-item(data-code="{{code}}" class="{{playing}}")
-    span.count {{count}}
-    span.js-url {{item}}
-    span.js-title
-    span.js-user
-
-    .b-list-status(js-status): .glyphicon.glyphicon-play
+    span.b-list-count {{count}}
+    span(js-title) {{title}}
+    //- span(js-url) {{item}}
 
 
 //- player template
