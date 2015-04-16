@@ -120,19 +120,19 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
 
     fill_list: ($ul, items) ->
       _.forEach items, (item, n) ->
-
-        template = Hb.compile $b_list_template.html()
         code     = self.get_code item
+        template = Hb.compile $b_list_template.html()
         num      = n
         count    = n + 1
         tdata    = {item,code,num,count,$ul}
 
-        self.get_youtube_data code, num
+        if code
+          self.get_youtube_data code, num
 
-        html = template tdata
-        $ul.append html
+          html = template tdata
+          $ul.append html
 
-        self.start_playback() if num is 0
+          self.start_playback() if num is 0
 
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"
@@ -143,8 +143,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
     get_code: (url) ->
       pattern = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i
       matches = url.match pattern
-
-      return matches[1]
+      return matches?[1]
 
     get_youtube_data: (code, num) ->
       tpl = _.template youtube_url
@@ -155,7 +154,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
         self.add_title data.data.items?[0].title, num
 
     add_title: (title, num) ->
-        $li = $b_list.find('li').eq num
+        $li = $b_list.find("[data-num=#{num}]")
         $li.find('[js-title]').text title
 
 

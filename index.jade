@@ -34,7 +34,9 @@ textarea.form-control(js-output rows=10)
 
 //- list template
 script(type="text/x-handlebars-template" js-b-list-template)
-  li.list-group-item.b-list-item(data-code="{{code}}" class="{{playing}}")
+  li.list-group-item.b-list-item(data-code="{{code}}"
+    class="{{playing}}" data-num="{{num}}")
+
     span.b-list-count {{count}}
     span.b-list-playing.glyphicon.glyphicon-play
 
