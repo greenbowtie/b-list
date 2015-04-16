@@ -10,4 +10,17 @@ $icon-font-path: "bower_components/bootstrap-sass/assets/fonts/bootstrap/";
 
 .b-list-count {
   margin-right: 1em;
+
+  .playing & {
+    display: none;
+  }
+}
+
+.b-list-playing {
+  margin-right: 1em;
+  display: none;
+
+  .playing & {
+    display: inline;
+  }
 }

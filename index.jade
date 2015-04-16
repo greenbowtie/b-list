@@ -10,7 +10,7 @@ hr
     button.btn.btn-block.btn-primary(js-button) go
 hr
 
-div(js-player)
+#player
 
 ul#b-list.b-list.list-group(js-b-list)
 hr
@@ -21,6 +21,8 @@ textarea.form-control(js-output rows=10)
 script(type="text/x-handlebars-template" js-b-list-template)
   li.list-group-item.b-list-item(data-code="{{code}}" class="{{playing}}")
     span.b-list-count {{count}}
+    span.b-list-playing.glyphicon.glyphicon-play
+
     span(js-title) {{title}}
     //- span(js-url) {{item}}
 

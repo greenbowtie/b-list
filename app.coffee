@@ -5,12 +5,14 @@ requirejs.config
     "handlebars" : "bower_components/handlebars/handlebars"
     "bootstrap"  : "bower_components/bootstrap-sass/assets/javascripts/bootstrap"
     "sortable"   : "bower_components/Sortable/Sortable"
+    "youtube"    : "https://www.youtube.com/iframe_api?noex&enablejsapi=1"
 
   shim:
     "bootstrap"  : deps: ['jquery']
+    "youtube"    : exports: "YT"
 
-define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
-($, _, Hb, bs, S) ->
+define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
+($, _, Hb, bs, S, YT) ->
 
   $b_list          = $("[js-b-list]")
   $player          = $("[js-player]")
@@ -82,8 +84,25 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
       this.play $start
 
     play: ($li) ->
-      code = $li.data 'code'
-      $player.html "<youtube-embed videoid=#{code} autoplay=1></youtube-embed>"
+      videoId = $li.data 'code'
+
+      events = {
+        onStateChange: (e) -> console.log e
+      }
+
+      playerVars = {
+        autoplay: 1
+      }
+
+      data = {
+        videoId
+        events
+        playerVars
+      }
+
+      player = new YT.Player 'player', data
+
+      # $player.html "<youtube-embed videoid=#{code} autoplay=1></youtube-embed>"
 
       self.set_playing($li)
 
@@ -102,7 +121,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable"],
         $ul.append html
 
         self.start_playback() if num is 0
-        false
+        false if num is 5
 
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"
