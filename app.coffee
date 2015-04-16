@@ -5,7 +5,7 @@ requirejs.config
     "handlebars" : "bower_components/handlebars/handlebars"
     "bootstrap"  : "bower_components/bootstrap-sass/assets/javascripts/bootstrap"
     "sortable"   : "bower_components/Sortable/Sortable"
-    "youtube"    : "https://www.youtube.com/iframe_api?noex&enablejsapi=1"
+    "youtube"    : "https://www.youtube.com/iframe_api?noex"
 
   shim:
     "bootstrap"  : deps: ['jquery']
@@ -21,6 +21,9 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
   $button          = $("[js-button]")
   $b_list_template = $("[js-b-list-template]")
   youtube_url      = "http://gdata.youtube.com/feeds/api/videos?q=<%= code %>&format=5&max-results=1&v=2&alt=jsonc"
+
+  YTPlayer = ''
+
 
   # this is implicitly returned by coffee-script.
   self = {
@@ -72,10 +75,10 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       index = $ul.find("li").index playing
 
     get_next: ($ul) ->
-      (self.get_playing $ul) - 1
+      (self.get_playing $ul) + 1
 
     set_playing: ($li) ->
-      $li.siblings().removeClass ".playing"
+      $li.siblings().removeClass "playing"
       $li.addClass "playing"
 
     start_playback: ->
@@ -85,9 +88,14 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
 
     play: ($li) ->
       videoId = $li.data 'code'
+      that = self
 
       events = {
-        onStateChange: (e) -> console.log e
+        onStateChange: (e) ->
+          if e.data == YT.PlayerState.ENDED
+            next = self.get_next $b_list
+            $next = $b_list.find('li').eq next
+            that.play $next
       }
 
       playerVars = {
@@ -95,14 +103,17 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       }
 
       data = {
+        width: 1140
+        height: 640
         videoId
         events
         playerVars
       }
 
-      player = new YT.Player 'player', data
-
-      # $player.html "<youtube-embed videoid=#{code} autoplay=1></youtube-embed>"
+      if YTPlayer
+        YTPlayer.loadVideoById videoId
+      else
+        YTPlayer = new YT.Player 'js-b-list-player', data
 
       self.set_playing($li)
 
