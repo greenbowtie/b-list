@@ -57,7 +57,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
         self.fill_list $b_list, urls
 
         sortable = S.create $b_list.get(0), {
-          ghostClass: "disabled"
+          ghostClass: "list-group-item-warning"
         }
 
       else
@@ -78,6 +78,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       (self.get_playing $ul) + 1
 
     set_playing: ($li) ->
+      $li.parent().find(".playing").addClass "disabled"
       $li.siblings().removeClass "playing"
       $li.addClass "playing"
 
@@ -132,7 +133,6 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
         $ul.append html
 
         self.start_playback() if num is 0
-        false if num is 5
 
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"
