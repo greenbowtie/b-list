@@ -23,7 +23,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
   youtube_url      = "http://gdata.youtube.com/feeds/api/videos?q=<%= code %>&format=5&max-results=1&v=2&alt=jsonc"
 
   YTPlayer = ''
-
+  STARTED_PLAYBACK = false;
 
   # this is implicitly returned by coffee-script.
   self = {
@@ -81,6 +81,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       $li.parent().find(".playing").addClass "disabled"
       $li.siblings().removeClass "playing"
       $li.addClass "playing"
+      STARTED_PLAYBACK = true;
 
     start_playback: ->
       start  = self.get_playing($b_list) + 1
@@ -132,7 +133,8 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
           html = template tdata
           $ul.append html
 
-          self.start_playback() if num is 0
+
+          self.start_playback() if not STARTED_PLAYBACK
 
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"
