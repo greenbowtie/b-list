@@ -4,8 +4,8 @@
   "description": "Rip all the Youtube URLs out of a copypasta of a thread on 4chan.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-    "prod" "NODE_ENV=production harp server --port 8181"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod" "NODE_ENV=production harp server --port 8282"
   },
   "repository": {
     "type": "git",
