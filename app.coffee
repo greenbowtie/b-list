@@ -36,6 +36,8 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
     fill_from_local: ->
       $input.val( localStorage["input"] )
 
+
+
     clicked: (e) ->
       val = $input.val()
 
@@ -75,7 +77,8 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       index = $ul.find("li").index playing
 
     get_next: ($ul) ->
-      (self.get_playing $ul) + 1
+      next = (self.get_playing $ul) + 1
+      next = 0 if next = $ul.children().length
 
     set_playing: ($li) ->
       $li.parent().find(".playing").addClass "disabled"
