@@ -17,7 +17,7 @@
     "lodash": "~3.6.0",
     "requirejs": "~2.1.17",
     "handlebars": "~3.0.0",
-    "youtube-embed": "*",
-    "Sortable": "RubaXa/Sortable#1.2"
+    "Sortable": "RubaXa/Sortable#1.2",
+    "bootstrap-sass": "~3.3.4"
   }
 }
