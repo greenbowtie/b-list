@@ -67,7 +67,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       localStorage["input"] = val
 
     strip: (text) ->
-      pattern = /(((http(s)?:\/\/)?)(www\.)?((youtube\.com\/)|(youtu\.be)|(youtube)).[^ ]+)/g
+      pattern = /(((http(s)?:\/\/)?)(www\.)?((youtube\.com\/)|(youtu\.be)|(youtube)).+[^\s])/g
       matches = text.match pattern
 
     get_playing: ($ul) ->
