@@ -42,7 +42,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       if val
         self.save val
 
-        self.empty_everything()
+        self.empty_output()
         self.process val
 
 
@@ -57,7 +57,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
         self.fill_list $b_list, urls
 
         sortable = S.create $b_list.get(0), {
-          ghostClass: "list-group-item-warning"
+          ghostClass: "floating"
         }
 
       else
@@ -104,8 +104,8 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
       }
 
       data = {
-        width: 1140
-        height: 640
+        width: "100%"
+        height: 40
         videoId
         events
         playerVars
@@ -137,8 +137,7 @@ define ["jquery", "lodash", "handlebars", "bootstrap", "sortable", "youtube"],
     fill_output: ($target, urls) ->
       $target.val urls.join "\n"
 
-    empty_everything: ->
-      $b_list.empty()
+    empty_output: ->
       $output.val ""
 
     get_code: (url) ->

@@ -1,9 +1,17 @@
 
-h1.text-center /b/-list generator
+h1.text-center b-list.audio
+hr
+
+// b-list.audio-1
+ins( class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3499832062666260"
+     data-ad-slot="5629130948"
+     data-ad-format="auto" )
 hr
 
 textarea.form-control(js-input rows=10)
-hr
+br
 
 .row
   .col-md-6.col-md-offset-3
@@ -18,6 +26,8 @@ hr
 
 textarea.form-control(js-output rows=10)
 
+
+
 //- list template
 script(type="text/x-handlebars-template" js-b-list-template)
   li.list-group-item.b-list-item(data-code="{{code}}" class="{{playing}}")
@@ -25,24 +35,11 @@ script(type="text/x-handlebars-template" js-b-list-template)
     span.b-list-playing.glyphicon.glyphicon-play
 
     span(js-title) {{title}}
-    //- span(js-url) {{item}}
 
 
-//- player template
-script(type="text/x-handlebars-template" js-player-template)
-  youtube-embed(videoid="{{code}}")
 
-  //- .panel.panel-default(data-num="{{num}}")
+script(async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js")
 
-  //-   .panel-heading(id="heading-{{num}}" data-toggle="collapse" data-parent="#b-list" data-target="#collapse-{{num}}")
+script.
+  (adsbygoogle = window.adsbygoogle || []).push({});
 
-  //-     {{#if loaded}}
-  //-     hf.panel-title {{otheritem}}
-  //-     {{else}}
-  //-     h4.panel-title {{item}}
-  //-     {{/if}}
-
-  //-   .panel-collapse.collapse(id="collapse-{{num}}" class="{{#if in_class}}in{{/if}}"): .panel-body
-  //-     youtube-embed(videoid="{{code}}")
-  //-     //- iframe.lazy-load(type="text/html" width="640" height="390" frameborder="0"
-  //-     //-   data-echo="https://www.youtube.com/embed/?enablejsapi=1&origin=http://localhost/")

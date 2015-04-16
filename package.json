@@ -1,0 +1,20 @@
+{
+  "name": "b-list",
+  "version": "1.0.0",
+  "description": "Rip all the Youtube URLs out of a copypasta of a thread on 4chan.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod" "NODE_ENV=production harp server --port 8181"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/greenbowtie/b-list"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/greenbowtie/b-list/issues"
+  },
+  "homepage": "https://github.com/greenbowtie/b-list"
+}

@@ -6,6 +6,16 @@ $icon-font-path: "bower_components/bootstrap-sass/assets/fonts/bootstrap/";
   position: relative;
   user-select: none;
   cursor: row-resize;
+
+  &.playing {
+    color: $state-info-text;
+    background: $state-info-bg;
+  }
+
+  &.floating {
+    color: $state-warning-text;
+    background: $state-warning-bg;
+  }
 }
 
 .b-list-count {
