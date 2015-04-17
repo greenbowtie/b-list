@@ -1,10 +1,8 @@
 class BList
-
-  $el: {}
-  count: 0
-  playing: 0
-  next: 0
-  repeat: "none"
+  constructor: (@$el, @count) ->
+    @playing = 0
+    @next = 0
+    @repeat = "none"
 
   fill: =>
 
@@ -16,13 +14,8 @@ class BList
 
   get_next: =>
 
-
-
 class ListItem
-
-  code: ''
-  title: ''
-  number: ''
+  constructor: (@code, @number, @title) ->
 
   set_code: (@code) =>
 
@@ -32,5 +25,5 @@ class ListItem
 
   get_title: => @title
 
-  request_data: (code) =>
+  request_data: (videoid) ->
 
