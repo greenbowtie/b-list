@@ -27,3 +27,6 @@ class ListItem
 
   request_data: (videoid) ->
 
+  on_request_done: (data) ->
+
+  on_request_fail: (data) ->
